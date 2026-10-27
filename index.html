@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>테니스 라운지 | 테니스 정보 공유</title>
+  <meta name="description" content="테니스 기술, 장비, 대회, 코트, 규칙 정보를 함께 나누는 커뮤니티" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">🎾 테니스 라운지</a>
+      <nav>
+        <a href="#posts">정보</a>
+        <a href="#share">글 공유하기</a>
+        <a href="#about">소개</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>테니스 정보를 함께 나눠요</h1>
+      <p>기술 팁, 장비 리뷰, 대회 소식, 코트 정보까지 — 테니스를 사랑하는 사람들의 공간</p>
+      <input id="search" type="search" placeholder="검색어를 입력하세요 (예: 포핸드, 라켓)" />
+    </div>
+  </section>
+
+  <main class="container" id="posts">
+    <div class="filters" id="filters"></div>
+    <p class="result-count" id="result-count"></p>
+    <div class="grid" id="post-list"></div>
+  </main>
+
+  <section class="container panel" id="share">
+    <h2>정보 공유하기</h2>
+    <p>이 사이트는 GitHub로 운영됩니다. 아래 방법 중 하나로 글을 올려주세요.</p>
+    <ol>
+      <li><strong>간단하게:</strong> 저장소의 <em>Issues</em> 탭에서 새 이슈로 글을 남기면 운영자가 게시합니다.</li>
+      <li><strong>직접 올리기:</strong> <code>data/posts.js</code>에 글을 추가하고 Pull Request를 보내주세요.</li>
+    </ol>
+    <a class="btn" id="issue-link" href="#" target="_blank" rel="noopener">이슈로 글 제안하기</a>
+  </section>
+
+  <section class="container panel" id="about">
+    <h2>소개</h2>
+    <p>테니스 라운지는 누구나 참여할 수 있는 오픈 테니스 정보 사이트입니다. GitHub Pages로 무료 호스팅됩니다.</p>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 테니스 라운지 · Hosted on GitHub Pages</div>
+  </footer>
+
+  <!-- 글 상세 모달 -->
+  <dialog id="post-modal">
+    <article>
+      <button class="close" id="modal-close" aria-label="닫기">×</button>
+      <span class="badge" id="modal-category"></span>
+      <h2 id="modal-title"></h2>
+      <p class="meta" id="modal-meta"></p>
+      <div class="body" id="modal-body"></div>
+    </article>
+  </dialog>
+
+  <script src="data/posts.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

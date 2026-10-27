@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>테니스 라운지 | 테니스 정보 공유</title>
+  <meta name="description" content="테니스 기술, 장비, 대회, 코트, 규칙 정보를 함께 나누는 커뮤니티" />
+  <style>
+:root {
+  --green: #1f6f43;
+  --green-dark: #154d2f;
+  --ball: #d7e84a;
+  --bg: #f6f8f4;
+  --card: #ffffff;
+  --text: #1e2420;
+  --muted: #66706a;
+  --border: #e1e6df;
+  --radius: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.container { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+/* 헤더 */
+.site-header {
+  background: var(--green-dark);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.header-inner { display: flex; justify-content: space-between; align-items: center; height: 60px; }
+.logo { font-weight: 800; font-size: 1.2rem; }
+nav a { margin-left: 20px; opacity: .85; }
+nav a:hover { opacity: 1; color: var(--ball); }
+
+/* 히어로 */
+.hero {
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  color: #fff;
+  padding: 64px 0 56px;
+  text-align: center;
+}
+.hero h1 { margin: 0 0 8px; font-size: clamp(1.6rem, 4vw, 2.4rem); }
+.hero p { margin: 0 0 24px; opacity: .9; }
+#search {
+  width: 100%;
+  max-width: 520px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 999px;
+  font-size: 1rem;
+  outline: 3px solid transparent;
+}
+#search:focus { outline-color: var(--ball); }
+
+/* 필터 */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.filters button {
+  border: 1px solid var(--border);
+  background: var(--card);
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: .95rem;
+}
+.filters button.active { background: var(--green); color: #fff; border-color: var(--green); }
+.result-count { color: var(--muted); font-size: .9rem; }
+
+/* 카드 그리드 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+.card h3 { margin: 10px 0 6px; font-size: 1.1rem; }
+.card p { margin: 0; color: var(--muted); font-size: .95rem; flex: 1; }
+.card .meta { margin-top: 14px; font-size: .85rem; }
+
+.badge {
+  display: inline-block;
+  background: var(--ball);
+  color: var(--green-dark);
+  font-weight: 700;
+  font-size: .8rem;
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+.meta { color: var(--muted); }
+.empty { color: var(--muted); grid-column: 1 / -1; text-align: center; padding: 40px 0; }
+
+/* 패널 */
+.panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.panel h2 { margin-top: 0; color: var(--green-dark); }
+code { background: #eef2ec; padding: 2px 6px; border-radius: 4px; }
+.btn {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.btn:hover { background: var(--green-dark); }
+
+/* 모달 */
+dialog {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0;
+  width: min(640px, calc(100% - 32px));
+}
+dialog::backdrop { background: rgba(0,0,0,.5); }
+dialog article { padding: 28px; position: relative; }
+dialog h2 { margin: 10px 0 4px; }
+dialog .body { white-space: pre-line; margin-top: 16px; }
+.close {
+  position: absolute; top: 12px; right: 16px;
+  background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--muted);
+}
+
+/* 푸터 */
+.site-footer { text-align: center; color: var(--muted); font-size: .9rem; padding: 32px 0; }
+
+@media (max-width: 600px) {
+  nav a { margin-left: 12px; font-size: .9rem; }
+  .hero { padding: 44px 0 40px; }
+}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">🎾 테니스 라운지</a>
+      <nav>
+        <a href="#posts">정보</a>
+        <a href="#share">글 공유하기</a>
+        <a href="#about">소개</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>테니스 정보를 함께 나눠요</h1>
+      <p>기술 팁, 장비 리뷰, 대회 소식, 코트 정보까지 — 테니스를 사랑하는 사람들의 공간</p>
+      <input id="search" type="search" placeholder="검색어를 입력하세요 (예: 포핸드, 라켓)" />
+    </div>
+  </section>
+
+  <main class="container" id="posts">
+    <div class="filters" id="filters"></div>
+    <p class="result-count" id="result-count"></p>
+    <div class="grid" id="post-list"></div>
+  </main>
+
+  <section class="container panel" id="share">
+    <h2>정보 공유하기</h2>
+    <p>이 사이트는 GitHub로 운영됩니다. 아래 방법 중 하나로 글을 올려주세요.</p>
+    <ol>
+      <li><strong>간단하게:</strong> 저장소의 <em>Issues</em> 탭에서 새 이슈로 글을 남기면 운영자가 게시합니다.</li>
+      <li><strong>직접 올리기:</strong> <code>data/posts.js</code>에 글을 추가하고 Pull Request를 보내주세요.</li>
+    </ol>
+    <a class="btn" id="issue-link" href="#" target="_blank" rel="noopener">이슈로 글 제안하기</a>
+  </section>
+
+  <section class="container panel" id="about">
+    <h2>소개</h2>
+    <p>테니스 라운지는 누구나 참여할 수 있는 오픈 테니스 정보 사이트입니다. GitHub Pages로 무료 호스팅됩니다.</p>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 테니스 라운지 · Hosted on GitHub Pages</div>
+  </footer>
+
+  <!-- 글 상세 모달 -->
+  <dialog id="post-modal">
+    <article>
+      <button class="close" id="modal-close" aria-label="닫기">×</button>
+      <span class="badge" id="modal-category"></span>
+      <h2 id="modal-title"></h2>
+      <p class="meta" id="modal-meta"></p>
+      <div class="body" id="modal-body"></div>
+    </article>
+  </dialog>
+
+  <script>
+// 게시글 데이터
+// 새 글을 올리려면 아래 배열에 객체를 하나 추가하고 GitHub에 커밋하세요.
+// category: "기술" | "장비" | "대회" | "코트" | "규칙"
+window.POSTS = [
+  {
+    id: 1,
+    title: "포핸드 탑스핀, 라켓 헤드를 떨어뜨리는 것부터",
+    category: "기술",
+    author: "운영자",
+    date: "2026-10-20",
+    summary: "스윙 시작 시 라켓 헤드를 공보다 아래로 떨어뜨려야 아래에서 위로 쓸어 올리는 탑스핀이 만들어집니다.",
+    body: "1) 준비 자세에서 라켓을 뒤로 빼면서 헤드를 손목 아래로 떨어뜨립니다.\n2) 임팩트는 몸 앞쪽, 허리 높이에서 잡습니다.\n3) 팔로스루는 반대편 어깨 위로 마무리합니다.\n연습 팁: 벽치기로 공 10개를 연속으로 네트 높이 위 1m에 맞히는 것을 목표로 해보세요."
+  },
+  {
+    id: 2,
+    title: "입문자 라켓 고르는 법: 무게와 헤드 사이즈",
+    category: "장비",
+    author: "운영자",
+    date: "2026-10-18",
+    summary: "입문자는 270~290g, 헤드 100~105 sq.in 라켓이 컨트롤과 파워의 균형이 좋습니다.",
+    body: "• 무게: 270~290g (여성/청소년은 255~270g 권장)\n• 헤드 사이즈: 100~105 sq.in — 스윗스팟이 넓어 실수가 적습니다.\n• 그립 사이즈: 손바닥 주름에서 약지 끝까지 길이로 측정합니다.\n• 스트링 텐션: 처음엔 48~52 lbs 정도로 무난하게 시작하세요."
+  },
+  {
+    id: 3,
+    title: "그랜드슬램 4대 대회와 코트 종류",
+    category: "대회",
+    author: "운영자",
+    date: "2026-10-15",
+    summary: "호주오픈(하드), 롤랑가로스(클레이), 윔블던(잔디), US오픈(하드) — 코트마다 경기 양상이 달라집니다.",
+    body: "• 호주오픈 (1월, 멜버른) — 하드코트\n• 롤랑가로스 (5~6월, 파리) — 클레이코트, 공이 느리고 높게 튑니다.\n• 윔블던 (6~7월, 런던) — 잔디코트, 공이 빠르고 낮게 깔립니다.\n• US오픈 (8~9월, 뉴욕) — 하드코트"
+  },
+  {
+    id: 4,
+    title: "공공 테니스장 예약 팁",
+    category: "코트",
+    author: "운영자",
+    date: "2026-10-12",
+    summary: "지자체 공공시설 예약 시스템은 보통 한 달 전 특정 시각에 오픈됩니다. 오픈 시각을 미리 확인하세요.",
+    body: "• 거주지 지자체의 공공시설 통합예약 사이트를 즐겨찾기 해두세요.\n• 주말 오전 시간은 경쟁이 치열하므로 평일 저녁 야간 코트도 고려해보세요.\n• 우천 시 환불 규정을 꼭 확인하세요."
+  },
+  {
+    id: 5,
+    title: "테니스 점수 계산법 한 번에 정리",
+    category: "규칙",
+    author: "운영자",
+    date: "2026-10-10",
+    summary: "0(러브) → 15 → 30 → 40 → 게임. 40:40은 듀스, 2점 차가 나야 게임을 가져갑니다.",
+    body: "• 포인트: 러브(0), 15, 30, 40, 게임\n• 듀스: 40:40 동점 → 연속 2포인트를 따야 게임 획득\n• 세트: 6게임을 먼저 따되 2게임 차 필요, 6:6이면 타이브레이크\n• 타이브레이크: 7포인트 먼저, 2점 차"
+  }
+];
+
+// GitHub 저장소 주소
+const REPO_URL = "https://github.com/chltndud/tennis";
+
+const CATEGORIES = ["전체", "기술", "장비", "대회", "코트", "규칙"];
+const posts = (window.POSTS || []).slice().sort((a, b) => b.date.localeCompare(a.date));
+
+let currentCategory = "전체";
+let keyword = "";
+
+const listEl = document.getElementById("post-list");
+const filtersEl = document.getElementById("filters");
+const countEl = document.getElementById("result-count");
+const searchEl = document.getElementById("search");
+const modal = document.getElementById("post-modal");
+
+function escapeHTML(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[c]);
+}
+
+function renderFilters() {
+  filtersEl.innerHTML = CATEGORIES.map((c) =>
+    `<button data-cat="${c}" class="${c === currentCategory ? "active" : ""}">${c}</button>`
+  ).join("");
+}
+
+function renderPosts() {
+  const kw = keyword.trim().toLowerCase();
+  const filtered = posts.filter((p) => {
+    const inCat = currentCategory === "전체" || p.category === currentCategory;
+    const inKw = !kw || (p.title + p.summary + p.body).toLowerCase().includes(kw);
+    return inCat && inKw;
+  });
+
+  countEl.textContent = `${filtered.length}개의 글`;
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = `<p class="empty">조건에 맞는 글이 없습니다.</p>`;
+    return;
+  }
+
+  listEl.innerHTML = filtered.map((p) => `
+    <article class="card" data-id="${p.id}" tabindex="0">
+      <div><span class="badge">${escapeHTML(p.category)}</span></div>
+      <h3>${escapeHTML(p.title)}</h3>
+      <p>${escapeHTML(p.summary)}</p>
+      <div class="meta">${escapeHTML(p.author)} · ${escapeHTML(p.date)}</div>
+    </article>
+  `).join("");
+}
+
+function openPost(id) {
+  const p = posts.find((x) => x.id === Number(id));
+  if (!p) return;
+  document.getElementById("modal-category").textContent = p.category;
+  document.getElementById("modal-title").textContent = p.title;
+  document.getElementById("modal-meta").textContent = `${p.author} · ${p.date}`;
+  document.getElementById("modal-body").textContent = p.body;
+  modal.showModal();
+}
+
+filtersEl.addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  currentCategory = btn.dataset.cat;
+  renderFilters();
+  renderPosts();
+});
+
+searchEl.addEventListener("input", (e) => {
+  keyword = e.target.value;
+  renderPosts();
+});
+
+listEl.addEventListener("click", (e) => {
+  const card = e.target.closest(".card");
+  if (card) openPost(card.dataset.id);
+});
+listEl.addEventListener("keydown", (e) => {
+  const card = e.target.closest(".card");
+  if (card && e.key === "Enter") openPost(card.dataset.id);
+});
+
+document.getElementById("modal-close").addEventListener("click", () => modal.close());
+modal.addEventListener("click", (e) => { if (e.target === modal) modal.close(); });
+
+document.getElementById("issue-link").href = `${REPO_URL}/issues/new?title=${encodeURIComponent("[글 제안] ")}`;
+
+renderFilters();
+renderPosts();
+  </script>
+</body>
+</html>
